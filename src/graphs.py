@@ -1,36 +1,31 @@
-import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-import os
-from supervised_model import data_preprocessing
 
-X_train_scaled, X_test_scaled, y_train_log, y_test_log, y_test, y, df, preprocessor = data_preprocessing()
+def col_graphs(df):
+    corr_matrix = df.corr(numeric_only=True) 
+    correlations = corr_matrix["saleEstimate_currentPrice"].drop("saleEstimate_currentPrice")
 
-corr_matrix = df.corr(numeric_only=True) 
-correlations = corr_matrix["saleEstimate_currentPrice"].drop("saleEstimate_currentPrice")
+    top_n = 6
+    top_correlations = correlations.abs().sort_values(ascending=False).head(top_n)
 
-top_n = 6
-top_correlations = correlations.abs().sort_values(ascending=False).head(top_n)
+    top_features = top_correlations.index
+    real_correlations = correlations[top_features]
 
-top_features = top_correlations.index
-real_correlations = correlations[top_features]
+    num_features = len(top_features)
+    num_cols = 3
+    num_rows = (num_features + num_cols - 1) // num_cols
 
-num_features = len(top_features)
-num_cols = 3
-num_rows = (num_features + num_cols - 1) // num_cols
+    fig, axes = plt.subplots(num_rows, num_cols, figsize=(15, 5 * num_rows))
+    axes = axes.flatten()
 
-fig, axes = plt.subplots(num_rows, num_cols, figsize=(15, 5 * num_rows))
-axes = axes.flatten()
+    for i, feature in enumerate(top_features):
+        sns.regplot(x=feature, y="saleEstimate_currentPrice", data=df, ax=axes[i], scatter_kws={'alpha': 0.1, 's': 5})
+        
+        corr_value = real_correlations[feature]
+        axes[i].set_title(f'{feature} (corr: {corr_value:.2f})')
 
-for i, feature in enumerate(top_features):
-    sns.regplot(x=feature, y="saleEstimate_currentPrice", data=df, ax=axes[i], scatter_kws={'alpha': 0.1, 's': 5})
-    
-    corr_value = real_correlations[feature]
-    axes[i].set_title(f'{feature} (corr: {corr_value:.2f})')
+    for j in range(i + 1, len(axes)):
+        fig.delaxes(axes[j])
 
-for j in range(i + 1, len(axes)):
-    fig.delaxes(axes[j])
-
-plt.tight_layout()
-plt.show()
+    plt.tight_layout()
+    plt.show()

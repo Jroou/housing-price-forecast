@@ -1,19 +1,12 @@
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import TargetEncoder
-from sklearn.linear_model import Ridge
-from sklearn.metrics import mean_absolute_error
-import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
 import os
+import pandas as pd
 
-def data_preprocessing():
+def data_prep():
     df = pd.read_csv(os.path.join(os.getcwd(), "data", "housing-in-london", "5", "kaggle_london_house_price_data.csv"))
     #clearing the data
     cols_to_drop = [
@@ -94,18 +87,4 @@ def data_preprocessing():
 
     return X_train_scaled, X_test_scaled, y_train_log, y_test_log, y_test, y, df, preprocessor
 
-X_train_scaled, X_test_scaled, y_train_log, y_test_log, y_test, y, df, preprocessor = data_preprocessing()
-
-model = Ridge(alpha=10.0)
-model.fit(X_train_scaled, y_train_log)
-
-y_pred_log = model.predict(X_test_scaled)
-y_pred = np.expm1(y_pred_log)
-
-mse = mean_squared_error(y_test, y_pred)
-
-print(f"Mean of Sale Estimate Current Price: {y.mean()}")
-print(f"Root Mean Squared Error: {mse**0.5:.2f}")
-mae = mean_absolute_error(y_test, y_pred)
-print(f"Mean Absolute Error (MAE): {mae:.2f}")
 
