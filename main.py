@@ -5,6 +5,7 @@ from sklearn.metrics import mean_squared_error
 from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_absolute_error
 from src.graph import distribution_graph
+from src.graph import distribution_graph, actual_vs_predicted_graph
 import numpy as np
 
 from src.graphs import col_graphs
@@ -24,5 +25,6 @@ print(f"Root Mean Squared Error: {mse**0.5:.2f}")
 mae = mean_absolute_error(y_test, y_pred)
 print(f"Mean Absolute Error (MAE): {mae:.2f}")
 
-col_graphs(df)
+#col_graphs(df)
 distribution_graph(y_train_log)
+actual_vs_predicted_graph(model, X_train_scaled, X_test_scaled, y_train_log, y_test)

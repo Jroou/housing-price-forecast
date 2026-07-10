@@ -8,6 +8,8 @@ import pandas as pd
 
 def data_prep():
     df = pd.read_csv(os.path.join(os.getcwd(), "data", "housing-in-london", "5", "kaggle_london_house_price_data.csv"))
+    num_cols = df.shape[1]
+    
     #clearing the data
     cols_to_drop = [
         "rentEstimate_lowerPrice",
@@ -87,4 +89,5 @@ def data_prep():
 
     return X_train_scaled, X_test_scaled, y_train_log, y_test_log, y_test, y, df, preprocessor
 
-
+zz = data_prep()
+print(zz)
