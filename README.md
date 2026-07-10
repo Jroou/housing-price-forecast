@@ -1,37 +1,35 @@
 # 🏠 London Housing Price Forecast
 
-Цей проєкт реалізує автоматизований пайплайн машинного навчання для прогнозування вартості нерухомості у Лондоні. Модель аналізує характеристики об'єктів (площа, район, тип житла, енергоефективність) та будує прогноз на основі лінійної регресії з регуляризацією (Ridge).
+This project implements an automated machine learning pipeline to forecast real estate prices in London. The model analyzes property features (floor area, neighborhood, property type, energy rating) and predicts prices using a regularized linear regression model (Ridge).
 
-## 📊 Дані
+## 📊 Data
 
-Проєкт побудований на базі відкритих даних про ринок нерухомості Великобританії.
-* **Джерело:** [Kaggle: London House Price Data](https://www.kaggle.com/datasets/jakewright/house-price-data)
+The project is built on open data from the UK real estate market.
+* **Source:** [Kaggle: London House Price Data](https://www.kaggle.com/datasets/jakewright/house-price-data)
 
-## 🛠 Технології (Tech Stack)
+## 🛠 Tech Stack
 
-* **Мова:** Python 3.12+
-* **Обробка даних:** `pandas`, `numpy`
-* **Машинне навчання:** `scikit-learn` (Ridge Regression, Target Encoding, OneHotEncoder, StandardScaler)
-* **Візуалізація:** `matplotlib`, `seaborn`
+* **Language:** Python 3.12+
+* **Data Processing:** `pandas`, `numpy`
+* **Machine Learning:** `scikit-learn` (Ridge Regression, Target Encoding, OneHotEncoder, StandardScaler)
+* **Visualization:** `matplotlib`, `seaborn`
 
-## ⚙️ Особливості пайплайну
+## ⚙️ Pipeline Features
 
-* **Усунення витоку даних (Data Leakage):** Видалено історичні ціни та орендні ставки для забезпечення чесного прогнозування.
-* **Обробка категоріальних ознак:** Використано Target Encoding для лондонських поштових індексів (outcodes) та OHE для типів житла.
-* **Логарифмічне перетворення:** Цільова змінна (ціна) трансформована через `np.log1p()` для боротьби з асиметрією розподілу цін та супер-елітною нерухомістю.
-* **Оцінка якості:** Використовуються метрики RMSE та MAE, а також побудовано графіки *Actual vs. Predicted* для детекції перенавчання (overfitting).
+* **Data Leakage Prevention:** Removed historical prices and rent estimates to ensure realistic and fair forecasting.
+* **Categorical Feature Engineering:** Applied Target Encoding for London postal codes (outcodes) and One-Hot Encoding for property types.
+* **Log Transformation:** The target variable (price) was transformed using `np.log1p()` to handle price distribution skewness and super-prime real estate outliers.
+* **Model Evaluation:** Evaluated using RMSE and MAE metrics, alongside *Actual vs. Predicted* scatter plots to detect overfitting.
 
-## 📂 Структура проєкту
+## 📂 Project Structure
 
-* `main.py` — головний скрипт, який об'єднує етапи завантаження, навчання та оцінки моделі.
-* `src/data_preprocessing.py` — логіка очищення даних, заповнення пропусків та підготовки матриці ознак.
-* `src/graphs.py` / `src/graph.py` — модулі візуалізації (кореляційні матриці, розподіли, графіки результатів).
+* `main.py` — The entry point of the application that integrates data loading, model training, and evaluation.
+* `src/data_preprocessing.py` — Contains the core logic for data cleaning, missing value imputation, and feature matrix preparation.
+* `src/graphs.py` & `src/graph.py` — Visualization modules for generating correlation matrices, feature distributions, and prediction results.
 
-## 🚀 Як запустити
+## 🚀 How to Run
 
-1. Склонуйте репозиторій на свій комп'ютер.
-2. Встановіть необхідні бібліотеки з `requirements.txt`.
-3. Запустіть головний файл:
-
-```bash
-python main.py
+1. Clone this repository to your local machine.
+2. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
